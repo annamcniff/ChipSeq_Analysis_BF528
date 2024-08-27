@@ -1,0 +1,90 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+Biologist RMD final project 
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(tibble)
+
+#5.1
+setwd('/projectnb/bf528/users/group_6/anna_final/')
+gse <- read.table('GSE75070_MCF7_shRUNX1_shNS_RNAseq_log2_foldchange.txt.gz', header = TRUE)
+df_g <- as.data.frame.matrix(gse)
+
+# p-value= 0.01 for adjusted
+# >1 log2 fold change. 
+
+#filtered[padj]=df_g[padj]
+#filtered = df_g.loc[(df_g['padj'] < 0.01)]
+filtered <- filter(df_g, padj < 0.01)
+up_reg  <- filter(filtered, log2FoldChange > 1)
+down_reg  <- filter(filtered, log2FoldChange < -1)
+
+length(filtered$padj)
+length(up_reg$padj)
+length(down_reg$padj)
+head(up_reg)
+```
+
+```{r}
+annotated <- read.csv('annotated.csv', header = TRUE)
+df_a <- as.data.frame.matrix(annotated)
+
+head(df_a)
+```
+
+```{r}
+#figure has genes +/-5 kb of TSS and +/- 20 kb of "whole gene"
+
+gene5  <- filter(df_a, abs(Distance.to.TSS) < 5000)
+
+#head(gene5)
+# df$col3 <- with(df, ifelse(col1 > col2, value_if_true, value_if_false))
+
+upgenes <- merge(up_reg,gene5,by.x="genename", by.y="Gene.Name")
+head(upgenes)
+length(upgenes$genename)
+downgenes <- merge(down_reg,gene5,by.x="genename", by.y="Gene.Name")
+head(downgenes)
+length(downgenes$genename)
+
+
+
+```
+```{r}
+gene20  <- filter(df_a, abs(Distance.to.TSS) > 5000, abs(Distance.to.TSS) < 20000)
+
+#head(gene5)
+# df$col3 <- with(df, ifelse(col1 > col2, value_if_true, value_if_false))
+
+upgenes2 <- merge(up_reg,gene20,by.x="genename", by.y="Gene.Name")
+head(upgenes2)
+length(upgenes2$genename)
+downgenes2 <- merge(down_reg,gene20,by.x="genename", by.y="Gene.Name")
+head(downgenes2)
+length(downgenes2$genename)
+```
+```{r}
+length(gene5$Gene.Name)
+length(gene20$Gene.Name)
+```
+
+```{r}
+heat <-read.table('GSE75070.matrix.gz', header=TRUE, row.names=1)
+#heat<- as.data.frame.matrix(heat)
+```
+
+```{r}
+head(heat)
+```
+```{r}
+heat_s <- heat[1:133, 1:133]
+heat_log2 <- log2(heat_s+1)
+heat_log2 <- heat_log2[3:133,3:133]
+colnames(heat_log2) <- rownames(heat_log2)
+heatmap(x=as.matrix(heat_log2), labRow = FALSE, labCol = FALSE)
+```
