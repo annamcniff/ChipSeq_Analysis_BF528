@@ -1,13 +1,19 @@
 # ChipSeq_Analysis_BF528
 Project Completed as part of coursework for BF528 taught by Dr. Joey Orofino
 
-## Project Description
+# Project Description
 
-BF528 Final project Anna McNiff
+BF528 Final project Anna McNiff. The goal of this project is to reproduce specific findings of Barutcu et al in "RUNX1 contributes to higher-order chromatin organization and gene regulation in breast cancer cells." Only specific parts of the analysis pipeline outlined below are reproduced here. 
 
-## Contributors
+### Skills: 
+- Hands-on experience with a modern ChIPseq analysis pipeline
+- Experience submitting jobs in a HPC environment
+- Working proficiency with commonly used bioinformatics software tools including bowtie2, HOMER, deeptools, IGV and bedtools
+
+# Contributors
 
 Anna McNiff
+
 
 # Repository Contents
 
