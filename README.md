@@ -20,7 +20,7 @@ Anna McNiff
 ## Analysis.sh 
 Bash file for Analysis portion of Project 3 
 - Converts BAM files to bigwig format 
-- Creates A heatmap showing the clustered correlation values for input and IP samples akin to Figure Supp2b.
+- Creates a heatmap showing the clustered correlation values for input and IP samples akin to Supplemental Figure 2b.
 - Generates Two plots (one for each IP replicate) showing the signal coverage for Runx1 across hg19 genes using the TSS and TTS as reference points
 
 ## Biologist.Rmd 
